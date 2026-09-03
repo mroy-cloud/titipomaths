@@ -1,5 +1,5 @@
 // Titipo Maths — offline cache. Bump CACHE when you upload new files.
-const CACHE = 'titipo-maths-v1';
+const CACHE = 'titipo-maths-v2';
 const ASSETS = [
   './', './index.html', './quarry.html', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './apple-touch-icon.png',

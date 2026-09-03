@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -18,11 +18,18 @@
             overflow: hidden;
             background: #000;
             font-family: 'Arial Rounded MT Bold', 'Trebuchet MS', 'Comic Sans MS', sans-serif;
+            touch-action: manipulation;
         }
+        body { display: flex; align-items: center; justify-content: center; }
+        /* Keep the game a fixed 16:9 shape; letterbox so it never stretches */
         #game-container {
             position: relative;
-            width: 100vw; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
+            width: min(100vw, calc(100vh * 16 / 9));
+            height: min(100vh, calc(100vw * 9 / 16));
+            width: min(100vw, calc(100dvh * 16 / 9));
+            height: min(100dvh, calc(100vw * 9 / 16));
+            container-type: size;
+            overflow: hidden;
             background: #87CEEB;
         }
         canvas { display: block; width: 100%; height: 100%; }
@@ -36,10 +43,10 @@
 
         /* Main Menu */
         #main-menu h1 {
-            font-size: clamp(48px, 8vw, 120px);
+            font-size: clamp(48px, 8cqw, 120px);
             color: #FFD600;
             text-shadow: 4px 4px 0 #E65100, 8px 8px 0 rgba(0,0,0,0.2);
-            letter-spacing: 4px; margin-bottom: 5vh;
+            letter-spacing: 4px; margin-bottom: 5cqh;
             -webkit-text-stroke: 2px #E65100;
             position: absolute; top: 8%; left: 0; right: 0; text-align: center;
         }
@@ -49,12 +56,12 @@
             pointer-events: none;
         }
         .menu-btn {
-            font-family: inherit; font-size: clamp(16px, 2.2vw, 28px);
-            padding: 1.5vh 2vw; border: none; border-radius: 16px;
+            font-family: inherit; font-size: clamp(16px, 2.2cqw, 28px);
+            padding: 1.5cqh 2cqw; border: none; border-radius: 16px;
             cursor: pointer; font-weight: bold; letter-spacing: 1px;
             transition: transform 0.15s, box-shadow 0.15s;
             text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
-            pointer-events: auto; width: 22vw; text-align: center;
+            pointer-events: auto; width: 22cqw; text-align: center;
         }
         .menu-btn:nth-child(1) { position: absolute; left: 35%; transform: translateX(-50%); }
         .menu-btn:nth-child(2) { position: absolute; left: 65%; transform: translateX(-50%); }
@@ -74,13 +81,13 @@
         /* Sub-option */
         #sub-option { background: rgba(0,0,0,0.5); }
         #sub-option h2 {
-            font-size: clamp(32px, 5vw, 72px); color: #fff;
-            margin-bottom: 5vh; text-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+            font-size: clamp(32px, 5cqw, 72px); color: #fff;
+            margin-bottom: 5cqh; text-shadow: 3px 3px 0 rgba(0,0,0,0.4);
         }
-        .sub-buttons { display: flex; gap: 4vw; flex-wrap: wrap; justify-content: center; margin-bottom: 4vh; }
+        .sub-buttons { display: flex; gap: 4cqw; flex-wrap: wrap; justify-content: center; margin-bottom: 4cqh; }
         .sub-btn {
-            font-family: inherit; font-size: clamp(24px, 4vw, 52px);
-            padding: 3vh 5vw; border: none; border-radius: 24px;
+            font-family: inherit; font-size: clamp(24px, 4cqw, 52px);
+            padding: 3cqh 5cqw; border: none; border-radius: 24px;
             cursor: pointer; font-weight: bold; color: #fff;
             transition: transform 0.15s; text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
         }
@@ -88,8 +95,8 @@
         .sub-btn.addition { background: linear-gradient(180deg, #42A5F5, #1E88E5); box-shadow: 0 6px 0 #1565C0; }
         .sub-btn.subtraction { background: linear-gradient(180deg, #FFA726, #FB8C00); box-shadow: 0 6px 0 #E65100; }
         .back-btn, .hud-btn {
-            font-family: inherit; font-size: clamp(16px, 2.5vw, 32px);
-            padding: 1.2vh 3vw; border: none; border-radius: 14px;
+            font-family: inherit; font-size: clamp(16px, 2.5cqw, 32px);
+            padding: 1.2cqh 3cqw; border: none; border-radius: 14px;
             cursor: pointer; font-weight: bold; color: #fff;
             transition: transform 0.15s;
         }
@@ -102,19 +109,19 @@
             pointer-events: none; z-index: 15;
         }
         #round-counter {
-            position: absolute; top: 1.5vh; right: 2vw;
-            font-size: clamp(14px, 2vw, 28px);
+            position: absolute; top: 1.5cqh; right: 2cqw;
+            font-size: clamp(14px, 2cqw, 28px);
             color: #fff; background: rgba(0,0,0,0.4);
-            padding: 0.5vh 1.5vw; border-radius: 10px;
+            padding: 0.5cqh 1.5cqw; border-radius: 10px;
         }
         /* HUD buttons row */
         #hud-buttons {
-            position: absolute; top: 1.5vh; left: 2vw;
-            display: flex; gap: 1vw; pointer-events: auto;
+            position: absolute; top: 1.5cqh; left: 2cqw;
+            display: flex; gap: 1cqw; pointer-events: auto;
         }
         .hud-btn {
-            font-size: clamp(13px, 1.8vw, 24px);
-            padding: 0.6vh 1.5vw; border-radius: 10px;
+            font-size: clamp(13px, 1.8cqw, 24px);
+            padding: 0.6cqh 1.5cqw; border-radius: 10px;
         }
         .hud-btn.exit-btn { background: linear-gradient(180deg, #EF5350, #E53935); box-shadow: 0 3px 0 #C62828; }
         .hud-btn.repeat-btn { background: linear-gradient(180deg, #FFA726, #FB8C00); box-shadow: 0 3px 0 #E65100; }
@@ -123,12 +130,12 @@
         #caption-bubble {
             position: absolute;
             left: 50%; transform: translateX(-50%);
-            top: 2vh;
-            max-width: 55vw;
-            font-size: clamp(13px, 2vw, 24px);
+            top: 2cqh;
+            max-width: 55cqw;
+            font-size: clamp(13px, 2cqw, 24px);
             color: #1A237E; background: rgba(255,255,255,0.92);
             border: 3px solid #1A237E; border-radius: 16px;
-            padding: 0.8vh 2vw; text-align: center;
+            padding: 0.8cqh 2cqw; text-align: center;
             box-shadow: 0 3px 12px rgba(0,0,0,0.2);
             pointer-events: none; line-height: 1.3;
             z-index: 20;
@@ -136,26 +143,26 @@
         #math-problem {
             position: absolute; left: 50%; transform: translateX(-50%);
             bottom: 28%;
-            font-size: clamp(28px, 5vw, 64px);
+            font-size: clamp(28px, 5cqw, 64px);
             color: #E65100; background: #FFF8E1;
             border: 4px solid #FF8F00; border-radius: 16px;
-            padding: 1.2vh 3vw; font-weight: bold;
+            padding: 1.2cqh 3cqw; font-weight: bold;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             pointer-events: none; white-space: nowrap;
             z-index: 18;
         }
         #keypad-wrapper {
-            position: absolute; right: 2vw; bottom: 2vh;
+            position: absolute; right: 2cqw; bottom: 2cqh;
             display: flex; flex-direction: column; align-items: flex-end;
             pointer-events: auto;
         }
         #keypad-toggle {
-            font-family: inherit; font-size: clamp(14px, 2vw, 24px);
-            padding: 0.6vh 2vw; border: none; border-radius: 10px;
+            font-family: inherit; font-size: clamp(14px, 2cqw, 24px);
+            padding: 0.6cqh 2cqw; border: none; border-radius: 10px;
             cursor: pointer; font-weight: bold; color: #fff;
             background: linear-gradient(180deg, #7E57C2, #5E35B1);
             box-shadow: 0 3px 0 #4527A0;
-            margin-bottom: clamp(3px, 0.4vh, 6px);
+            margin-bottom: clamp(3px, 0.4cqh, 6px);
             transition: transform 0.1s;
         }
         #keypad-toggle:hover { transform: scale(1.05); }
@@ -163,14 +170,14 @@
         #number-pad {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: clamp(3px, 0.5vw, 6px);
+            gap: clamp(3px, 0.5cqw, 6px);
             pointer-events: auto;
             background: rgba(0,0,0,0.3);
-            padding: clamp(4px, 0.6vw, 10px); border-radius: 12px;
+            padding: clamp(4px, 0.6cqw, 10px); border-radius: 12px;
         }
         .num-btn {
-            font-family: inherit; font-size: clamp(18px, 2.8vw, 36px);
-            width: clamp(36px, 5.5vw, 68px); height: clamp(36px, 5.5vw, 68px);
+            font-family: inherit; font-size: clamp(18px, 2.8cqw, 36px);
+            width: clamp(36px, 5.5cqw, 68px); height: clamp(36px, 5.5cqw, 68px);
             border: none; border-radius: 10px; cursor: pointer;
             font-weight: bold; color: #fff;
             background: linear-gradient(180deg, #5C6BC0, #3949AB);
@@ -181,25 +188,25 @@
         .num-btn.backspace {
             background: linear-gradient(180deg, #EF5350, #E53935);
             box-shadow: 0 3px 0 #C62828; grid-column: span 2;
-            width: auto; font-size: clamp(14px, 2vw, 26px);
+            width: auto; font-size: clamp(14px, 2cqw, 26px);
         }
         .num-btn.submit {
             background: linear-gradient(180deg, #66BB6A, #43A047);
             box-shadow: 0 3px 0 #2E7D32; grid-column: span 3;
-            width: auto; font-size: clamp(16px, 2.2vw, 30px);
+            width: auto; font-size: clamp(16px, 2.2cqw, 30px);
         }
 
         /* End Screen */
         #end-screen { background: rgba(0,0,0,0.6); }
         #end-screen h2 {
-            font-size: clamp(28px, 5vw, 64px); color: #FFD600;
-            margin-bottom: 5vh; text-shadow: 3px 3px 0 rgba(0,0,0,0.5);
-            text-align: center; padding: 0 5vw;
+            font-size: clamp(28px, 5cqw, 64px); color: #FFD600;
+            margin-bottom: 5cqh; text-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+            text-align: center; padding: 0 5cqw;
         }
-        .end-buttons { display: flex; gap: 3vw; flex-wrap: wrap; justify-content: center; }
+        .end-buttons { display: flex; gap: 3cqw; flex-wrap: wrap; justify-content: center; }
         .end-btn {
-            font-family: inherit; font-size: clamp(20px, 3vw, 40px);
-            padding: 2vh 4vw; border: none; border-radius: 18px;
+            font-family: inherit; font-size: clamp(20px, 3cqw, 40px);
+            padding: 2cqh 4cqw; border: none; border-radius: 18px;
             cursor: pointer; font-weight: bold; color: #fff; transition: transform 0.15s;
         }
         .end-btn:hover { transform: scale(1.06); }
@@ -214,14 +221,29 @@
             z-index: 100; cursor: pointer;
         }
         #audio-start h2 {
-            font-size: clamp(28px, 5vw, 64px); color: #FFD600;
-            margin-bottom: 3vh; text-shadow: 3px 3px 0 rgba(0,0,0,0.5);
-            text-align: center; padding: 0 5vw;
+            font-size: clamp(28px, 5cqw, 64px); color: #FFD600;
+            margin-bottom: 3cqh; text-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+            text-align: center; padding: 0 5cqw;
         }
-        #audio-start p { font-size: clamp(16px, 2.5vw, 32px); color: #fff; opacity: 0.8; }
+        #audio-start p { font-size: clamp(16px, 2.5cqw, 32px); color: #fff; opacity: 0.8; }
+
+        /* Landscape game: in portrait on a phone, ask to turn sideways */
+        #rotate-overlay {
+            position: fixed; inset: 0; z-index: 200; display: none;
+            background: #1A237E; color: #fff; text-align: center;
+            align-items: center; justify-content: center; flex-direction: column;
+            font-size: 24px; font-weight: bold; padding: 24px; gap: 18px;
+        }
+        #rotate-overlay .phone {
+            width: 46px; height: 82px; border: 5px solid #FFD600; border-radius: 10px;
+            transform: rotate(-90deg); animation: rot 1.6s ease-in-out infinite alternate;
+        }
+        @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(-90deg); } }
+        @media (orientation: portrait) and (max-width: 900px) { #rotate-overlay { display: flex; } }
     </style>
 </head>
 <body>
+<div id="rotate-overlay"><div class="phone"></div><div>Turn your phone sideways to play!</div></div>
 <div id="game-container">
     <canvas id="gameCanvas" width="1280" height="720"></canvas>
 
@@ -330,6 +352,7 @@ function initAudio() {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     musicGain = audioCtx.createGain(); musicGain.gain.value = 0.12; musicGain.connect(audioCtx.destination);
     sfxGain = audioCtx.createGain(); sfxGain.gain.value = 0.22; sfxGain.connect(audioCtx.destination);
+    if (audioCtx.state === 'suspended') audioCtx.resume();
 }
 
 function playNote(freq, start, dur, wave, dest) {
@@ -539,7 +562,7 @@ function speak(text, onEnd, captionText, clipKey) {
     // Stop any currently playing clip
     if (currentVoiceClip) { currentVoiceClip.pause(); currentVoiceClip.currentTime = 0; currentVoiceClip = null; }
     if (clipKey && VC[clipKey]) {
-        const clip = VC[clipKey].cloneNode();
+        const clip = VC[clipKey]; clip.currentTime = 0;   // reuse the tap-unlocked element (iOS)
         clip.volume = 0.9;
         currentVoiceClip = clip;
         const fallback = setTimeout(() => { currentVoiceClip = null; if(onEnd) onEnd(); }, 10000);
@@ -556,7 +579,7 @@ function repeatLastSpeech() {
         captionEl.classList.remove('hidden');
         if (lastVoiceClipKey && VC[lastVoiceClipKey]) {
             if (currentVoiceClip) { currentVoiceClip.pause(); currentVoiceClip = null; }
-            const clip = VC[lastVoiceClipKey].cloneNode();
+            const clip = VC[lastVoiceClipKey]; clip.currentTime = 0;
             clip.volume = 0.9;
             currentVoiceClip = clip;
             clip.play().catch(() => {});
@@ -1552,7 +1575,7 @@ function enterGS(s){
     case GS.CORRECT_SUB:
         sfxCorrect();sfxConfetti();spawnConfetti();chichiSt='somersault';chichiSomT=Date.now();hideNumPad();celebrating=true;
         sfxChichiYap();setTimeout(()=>sfxChichiYap(),400);setTimeout(()=>sfxChichiYap(),900);
-        if(VC.yay){const y=VC.yay.cloneNode();y.volume=0.2;y.play().catch(()=>{});}
+        if(VC.yay){const y=VC.yay;y.currentTime=0;y.volume=0.2;y.play().catch(()=>{});}
         skyEq=`${initOnTrain} - ${numExit} = ${correctAnsSub}`;
         speak("That's correct!",()=>{
             chichiSt='idle';skyEqVisible=false;celebrating=false;
@@ -1569,7 +1592,7 @@ function enterGS(s){
     case GS.CORRECT:
         sfxCorrect();sfxConfetti();spawnConfetti();chichiSt='somersault';chichiSomT=Date.now();hideNumPad();celebrating=true;
         sfxChichiYap();setTimeout(()=>sfxChichiYap(),400);setTimeout(()=>sfxChichiYap(),900);
-        if(VC.yay){const y=VC.yay.cloneNode();y.volume=0.2;y.play().catch(()=>{});}
+        if(VC.yay){const y=VC.yay;y.currentTime=0;y.volume=0.2;y.play().catch(()=>{});}
         skyEq=equationBase+correctAnsAdd;
         speak("That's correct! All Aboard — Doors closing!",()=>{
             chichiSt='idle';skyEqVisible=false;celebrating=false;setTimeout(()=>enterGS(GS.DOORCLOSE),500*SPEED);
@@ -1637,7 +1660,10 @@ el('btn-exit').addEventListener('click',goMenu);
 el('btn-repeat').addEventListener('click',repeatLastSpeech);
 
 el('audio-start').addEventListener('click',()=>{
-    initAudio();initVoiceClips();el('audio-start').classList.add('hidden');el('main-menu').classList.remove('hidden');startMenuGreeting();
+    initAudio();initVoiceClips();
+    // iOS: unlock every voice clip during this tap so later lines are allowed to play
+    Object.values(VC).forEach(a=>{ a.muted=true; a.play().then(()=>{ a.pause(); a.currentTime=0; a.muted=false; }).catch(()=>{ a.muted=false; }); });
+    el('audio-start').classList.add('hidden');el('main-menu').classList.remove('hidden');startMenuGreeting();
 });
 
 // ============================================================
@@ -1800,6 +1826,10 @@ function renderEnd(time){
 // ============================================================
 // INIT
 // ============================================================
+// iOS: wake the sound engine on any touch and when returning to the app
+function resumeAudio(){ if(audioCtx && audioCtx.state==='suspended') audioCtx.resume(); }
+['touchend','pointerdown','click'].forEach(function(ev){ document.addEventListener(ev, resumeAudio, {passive:true}); });
+document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='visible') resumeAudio(); });
 function resizeCanvas(){canvas.width=VW;canvas.height=VH;}
 window.addEventListener('resize',resizeCanvas);resizeCanvas();
 requestAnimationFrame(update);

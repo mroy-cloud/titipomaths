@@ -27,6 +27,8 @@
             position: relative;
             width: min(100vw, calc(100vh * 16 / 9));
             height: min(100vh, calc(100vw * 9 / 16));
+            width: min(100vw, calc(100dvh * 16 / 9));   /* dvh: ignores Safari's toolbars */
+            height: min(100dvh, calc(100vw * 9 / 16));
             container-type: size;
             overflow: hidden;
             background: #87CEEB;
@@ -194,9 +196,24 @@
         .end-btn:hover { transform: scale(1.06); }
         .end-btn.again { background: linear-gradient(180deg, #66BB6A, #43A047); box-shadow: 0 6px 0 #2E7D32; }
         .end-btn.menu-return { background: linear-gradient(180deg, #42A5F5, #1E88E5); box-shadow: 0 6px 0 #1565C0; }
+
+        /* Landscape game: in portrait on a phone, ask to turn sideways */
+        #rotate-overlay {
+            position: fixed; inset: 0; z-index: 200; display: none;
+            background: #1A237E; color: #fff; text-align: center;
+            align-items: center; justify-content: center; flex-direction: column;
+            font-size: 24px; font-weight: bold; padding: 24px; gap: 18px;
+        }
+        #rotate-overlay .phone {
+            width: 46px; height: 82px; border: 5px solid #FFD600; border-radius: 10px;
+            transform: rotate(-90deg); animation: rot 1.6s ease-in-out infinite alternate;
+        }
+        @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(-90deg); } }
+        @media (orientation: portrait) and (max-width: 900px) { #rotate-overlay { display: flex; } }
     </style>
 </head>
 <body>
+<div id="rotate-overlay"><div class="phone"></div><div>Turn your phone sideways to play!</div></div>
 <div id="game-container">
     <canvas id="gameCanvas" width="1280" height="720"></canvas>
 
